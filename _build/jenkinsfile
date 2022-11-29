@@ -15,8 +15,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'dotnet test src/ChessWithActors/ChessWithActors.Backend.Tests/ChessWithActors.Backend.Tests.csproj -c Release --no-build'
+                sh 'dotnet test src/ChessWithActors/ChessWithActors.Backend.Tests/ChessWithActors.Backend.Tests.csproj -c Release --no-build --logger=trx'
             }
+        }
+    }
+    post {
+        always{
+            xunit (tools: [ MSTest(pattern: '**/*.trx') ], skipPublishingChecks: false)
         }
     }
 }
