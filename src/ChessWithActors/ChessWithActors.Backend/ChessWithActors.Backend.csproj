@@ -5,5 +5,15 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Gera.Chess" Version="1.0.2" />
+        <PackageReference Include="Proto.Cluster.Kubernetes" Version="1.0.0-rc4.14" />
+        <PackageReference Include="Proto.Cluster.TestProvider" Version="1.0.0-rc4.14" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ChessWithActors.Comms\ChessWithActors.Comms.csproj" />
+    </ItemGroup>
 
 </Project>

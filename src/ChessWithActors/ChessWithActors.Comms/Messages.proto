@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option csharp_namespace = "ChessWithActors";
+
+enum ChessPlayerType {
+    White = 0;
+    Black = 1;
+}
+
+message CreateGame {
+    string GameId = 1;
+}
+
+message JoinGame {
+    string Username = 1;
+}
+
+message MakeMove
+{
+    string Username = 1;
+    string From = 2;
+    string To = 3;
+}
+
+message MoveMade
+{
+    string GameId = 1;
+    string Username = 2;
+    string From = 3;
+    string To = 4;
+    ChessPlayerType Player = 5;
+    bool OpponentChecked = 6;
+}
+
+message InvalidMove
+{
+    string GameId = 1;
+    string Username = 2;
+    string From = 3;
+    string To = 4;
+    string Reason = 5;
+}
+
+message GetGameState
+{
+}
+
+enum GameState
+{
+    PendingPlayerJoin = 0;
+    InProgress = 1;
+    Concluded = 2;
+    DoesNotExist = 3;
+}

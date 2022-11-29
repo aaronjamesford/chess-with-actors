@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessWithActors.Backend", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessWithActors.Backend.Tests", "ChessWithActors.Backend.Tests\ChessWithActors.Backend.Tests.csproj", "{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessWithActors.Comms", "ChessWithActors.Comms\ChessWithActors.Comms.csproj", "{F8DD2312-C688-4BC7-9B4E-8CCDA1A2D57B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8DD2312-C688-4BC7-9B4E-8CCDA1A2D57B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8DD2312-C688-4BC7-9B4E-8CCDA1A2D57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8DD2312-C688-4BC7-9B4E-8CCDA1A2D57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8DD2312-C688-4BC7-9B4E-8CCDA1A2D57B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
