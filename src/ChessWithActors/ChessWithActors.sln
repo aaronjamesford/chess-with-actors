@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessWithActors.Backend", "ChessWithActors.Backend\ChessWithActors.Backend.csproj", "{865D9280-F8B2-4B26-A58E-6170182D370C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessWithActors.Backend.Tests", "ChessWithActors.Backend.Tests\ChessWithActors.Backend.Tests.csproj", "{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{865D9280-F8B2-4B26-A58E-6170182D370C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{865D9280-F8B2-4B26-A58E-6170182D370C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{865D9280-F8B2-4B26-A58E-6170182D370C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{865D9280-F8B2-4B26-A58E-6170182D370C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{292C9C5D-B9F2-4CBA-9C1B-A8E1E08976AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

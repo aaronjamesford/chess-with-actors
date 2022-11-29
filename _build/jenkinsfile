@@ -1,0 +1,16 @@
+pipeline {
+    agent {
+        kubernetes {
+            defaultContainer 'dotnet-sdk'
+            yamlFile '_build/KubernetesPod.yaml'
+        }
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'dotnet build src/ChessWithActors/ChessWithActors.sln -c Release'
+            }
+        }
+    }
+}

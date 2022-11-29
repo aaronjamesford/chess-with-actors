@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    build-env: dotnet
+spec:
+  containers:
+  - name: dotnet-sdk
+    image: mcr.microsoft.com/dotnet/sdk:6.0
+    command:
+    - cat
+    tty: true
