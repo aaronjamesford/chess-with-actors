@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,7 +16,7 @@ spec:
       serviceAccountName: chess-cluster
       containers:
         - name: backend
-          image: aaronjamesford/chess-backend:main-1  # {"$imagepolicy": "flux-system:chess-backend"}
+          image: aaronjamesford/chess-backend:main-15 # {"$imagepolicy": "flux-system:chess-backend"}
           resources:
             limits:
               memory: "2Gi"
@@ -45,7 +44,7 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
           env:
-          - name: ProtoActor__AdvertisedHost
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
+            - name: ProtoActor__AdvertisedHost
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
