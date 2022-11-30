@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: backend
   namespace: chess-with-actors
+annotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: /metrics
 spec:
   replicas: 3
   selector:
