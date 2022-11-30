@@ -3,7 +3,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
 metadata:
   name: chess-backend
-  namespace: chess-with-actors
+  namespace: flux-system
 spec:
   image: aaronjamesford/chess-backend
   interval: 5m0s
@@ -14,7 +14,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: chess-backend
-  namespace: chess-with-actors
+  namespace: flux-system
 spec:
   imageRepositoryRef:
     name: chess-backend
