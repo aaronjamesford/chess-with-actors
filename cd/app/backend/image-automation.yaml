@@ -5,7 +5,7 @@ metadata:
   name: chess-backend
   namespace: chess-with-actors
 spec:
-  image: aaronjamesford/chess-with-actors
+  image: aaronjamesford/chess-backend
   interval: 5m0s
   secretRef:
     name: regcred
