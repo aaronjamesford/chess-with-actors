@@ -2,11 +2,36 @@ syntax = "proto3";
 
 option csharp_namespace = "ChessWithActors";
 
+// Enums
 enum ChessPlayerType {
     White = 0;
     Black = 1;
 }
 
+enum GameState
+{
+    PendingPlayerJoin = 0;
+    InProgress = 1;
+    Concluded = 2;
+    DoesNotExist = 3;
+}
+
+enum ChessWinner
+{
+    WhiteWin = 0;
+    BlackWin = 1;
+    Draw = 2;
+}
+
+enum ChessEndReason
+{
+    Checkmate = 0;
+    Stalemate = 1;
+    Abandoned = 2;
+    Resigned = 3;
+}
+
+// Messages
 message CreateGame {
     string GameId = 1;
 }
@@ -22,16 +47,6 @@ message MakeMove
     string To = 3;
 }
 
-message MoveMade
-{
-    string GameId = 1;
-    string Username = 2;
-    string From = 3;
-    string To = 4;
-    ChessPlayerType Player = 5;
-    bool OpponentChecked = 6;
-}
-
 message InvalidMove
 {
     string GameId = 1;
@@ -45,10 +60,40 @@ message GetGameState
 {
 }
 
-enum GameState
+// Events
+
+message GameCreated
 {
-    PendingPlayerJoin = 0;
-    InProgress = 1;
-    Concluded = 2;
-    DoesNotExist = 3;
+    string GameId = 1;
+}
+
+message PlayerJoined
+{
+    string GameId = 1;
+    string Username = 2;
+    ChessPlayerType Player = 3;
+}
+
+message GameStarted
+{
+    string GameId = 1;
+    string WhitePlayer = 2;
+    string BlackPlayer = 3;
+}
+
+message GameEnded
+{
+    string GameId = 1;
+    ChessWinner Winner = 2;
+    ChessEndReason EndReason = 3;
+}
+
+message MoveMade
+{
+    string GameId = 1;
+    string Username = 2;
+    string From = 3;
+    string To = 4;
+    ChessPlayerType Player = 5;
+    bool OpponentChecked = 6;
 }

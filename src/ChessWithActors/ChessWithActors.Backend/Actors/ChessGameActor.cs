@@ -29,32 +29,56 @@ public class ChessGameActor : IActor
         };
     }
 
-    private Task ProcessCreate(CreateGame msg, IContext context)
+    private async Task ProcessCreate(CreateGame msg, IContext context)
     {
         if (_state != GameState.DoesNotExist)
-            return Task.CompletedTask;
+            return;
         
         _id = msg.GameId;
         _state = GameState.PendingPlayerJoin;
         _board = new ChessBoard();
-        
-        return Task.CompletedTask;
+
+        var evt = new GameCreated
+        {
+            GameId = _id
+        };
+        await context.Cluster().Publisher().Publish(Topics.Notifications, evt);
     }
 
-    private Task ProcessJoin(JoinGame msg, IContext context)
+    private async Task ProcessJoin(JoinGame msg, IContext context)
     {
         if (_state != GameState.PendingPlayerJoin)
-            return Task.CompletedTask;
+            return;
+
+        var player = ChessPlayerType.White;
 
         if (_whitePlayer == null)
             _whitePlayer = msg.Username;
         else if (_blackPlayer == null)
+        {
             _blackPlayer = msg.Username;
+            player = ChessPlayerType.Black;
+        }
+
+        var joined = new PlayerJoined
+        {
+            GameId = _id,
+            Player = player,
+            Username = msg.Username
+        };
+        await context.Cluster().Publisher().Publish(ChessGame.Topic(_id!), joined);
 
         if (_whitePlayer != null && _blackPlayer != null)
+        {
             _state = GameState.InProgress;
-
-        return Task.CompletedTask;
+            var started = new GameStarted
+            {
+                GameId = _id,
+                BlackPlayer = _blackPlayer,
+                WhitePlayer = _whitePlayer
+            };
+            await context.Cluster().Publisher().Publish(ChessGame.Topic(_id!), started);
+        }
     }
 
     private Task ProcessGetGameState(IContext context)
@@ -97,6 +121,8 @@ public class ChessGameActor : IActor
             await context.Cluster().Publisher().Publish(ChessGame.Topic(_id!), evt);
 
             _current = _current == ChessPlayerType.White ? ChessPlayerType.Black : ChessPlayerType.White;
+
+            await ProcessEndGame(context);
             
             return;
         }
@@ -110,5 +136,37 @@ public class ChessGameActor : IActor
             Reason = "InvalidMove"
         };
         context.Respond(invalid);
+    }
+
+    private async Task ProcessEndGame(IContext context)
+    {
+        if (!_board!.IsEndGame)
+            return;
+
+        _state = GameState.Concluded;
+
+        var ended = new GameEnded
+        {
+            GameId = _id,
+            Winner = _board.EndGame!.EndgameType switch
+            {
+                EndgameType.Checkmate => _board.EndGame.WonSide == PieceColor.White
+                    ? ChessWinner.WhiteWin
+                    : ChessWinner.BlackWin,
+                EndgameType.Resigned => _board.EndGame.WonSide == PieceColor.White
+                    ? ChessWinner.WhiteWin
+                    : ChessWinner.BlackWin,
+                EndgameType.Stalemate => ChessWinner.Draw,
+                _ => ChessWinner.Draw
+            },
+            EndReason = _board.EndGame!.EndgameType switch
+            {
+                EndgameType.Checkmate => ChessEndReason.Checkmate,
+                EndgameType.Resigned => ChessEndReason.Resigned,
+                EndgameType.Stalemate => ChessEndReason.Stalemate,
+                _ => ChessEndReason.Abandoned
+            }
+        };
+        await context.Cluster().Publisher().Publish(ChessGame.Topic(_id!), ended);
     }
 }
