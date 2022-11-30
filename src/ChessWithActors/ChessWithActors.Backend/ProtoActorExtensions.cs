@@ -65,7 +65,8 @@ public static class ProtoActorExtensions
 
     private static (GrpcNetRemoteConfig, IClusterProvider) ConfigureKubernetes(IConfiguration config)
     {
-        return (GrpcNetRemoteConfig.BindToAllInterfaces()
+        return (GrpcNetRemoteConfig
+            .BindToAllInterfaces(advertisedHost: config["ProtoActor:AdvertisedHost"])
             .WithChessMessages()
             .WithRemoteDiagnostics(true), new KubernetesProvider());
     }
