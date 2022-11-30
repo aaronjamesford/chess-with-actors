@@ -9,20 +9,20 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'dotnet build src/ChessWithActors/ChessWithActors.sln -c Release'
+                sh 'dotnet build src/ChessWithActors.sln -c Release'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'dotnet test src/ChessWithActors/ChessWithActors.Backend.Tests/ChessWithActors.Backend.Tests.csproj -c Release --no-build --logger=trx'
+                sh 'dotnet test src/ChessWithActors.Backend.Tests/ChessWithActors.Backend.Tests.csproj -c Release --no-build --logger=trx'
             }
         }
 
         stage('Package') {
             steps {
                 container('dotnet-sdk') {
-                    sh 'dotnet publish src/ChessWithActors/ChessWithActors.Backend/ChessWithActors.Backend.csproj -c Release --no-build -o _build/out/backend'
+                    sh 'dotnet publish src/ChessWithActors.Backend/ChessWithActors.Backend.csproj -c Release --no-build -o _build/out/backend'
                 }
                 container('docker') {
                     sh "docker build -f _build/Backend.Dockerfile -t aaronjamesford/chess-backend:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
