@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: chess-with-actors
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chess-backend
+  template:
+    metadata:
+      labels:
+        app: chess-backend
+    spec:
+      serviceAccountName: chess-cluster
+      containers:
+        - name: backend
+          image: aaronjamesford/chess-backend:main-1  # {"$imagepolicy": "chess-with-actors:chess-backend"}
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+            requests:
+              memory: "500Mi"
+              cpu: "500m"
+          ports:
+            - name: http
+              containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: "/metrics"
+              port: 80
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/metrics"
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          env:
+          - name: ProtoActor__AdvertisedHost
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP

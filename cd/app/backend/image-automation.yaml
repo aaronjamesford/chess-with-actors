@@ -1,0 +1,24 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: chess-backend
+  namespace: chess-with-actors
+spec:
+  image: aaronjamesford/chess-with-actors
+  interval: 5m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: chess-backend
+  namespace: chess-with-actors
+spec:
+  imageRepositoryRef:
+    name: chess-backend
+  filterTags:
+    pattern: '^main-(?P<build>\d*)'
+    extract: '$build'
+  policy:
+    numerical:
+      order: asc
