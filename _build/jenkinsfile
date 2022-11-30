@@ -35,7 +35,7 @@ pipeline {
                 container('docker') {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                        sh "docker push aaronjamesford/chess-backend:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
+                        sh "docker push aaronjamesford/chess-backend:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
                     }
                 }
             }
