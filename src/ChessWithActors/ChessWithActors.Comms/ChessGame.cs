@@ -6,6 +6,8 @@ namespace ChessWithActors.Comms;
 public static class ChessGame
 {
     public static string ActorId(string id) => $"/chessgame/{id}";
+
+    public static string Topic(string id) => $"chess-{id}";
     
     public static Task<PID?> GetChessGame(this Cluster cluster, string id)
         => cluster.GetAsync(ActorId(id), Kinds.ChessGame, CancellationTokens.FromSeconds(1));
