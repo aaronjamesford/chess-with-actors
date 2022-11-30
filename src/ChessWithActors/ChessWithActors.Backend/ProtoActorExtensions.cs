@@ -10,6 +10,7 @@ using Proto.Remote.GrpcNet;
 using Proto.Remote.HealthChecks;
 using Proto.Utils;
 using ChessWithActors.Comms;
+using Proto.OpenTelemetry;
 using Proto.Remote;
 
 namespace ChessWithActors.Backend;
@@ -29,10 +30,12 @@ public static class ProtoActorExtensions
 
             var (remoteConfig, clusterProvider) = GetClusterConfig(config);
 
+            var chessProps = Props.FromProducer(() => new ChessGameActor()).WithTracing();
+
             var clusterConfig = ClusterConfig.Setup(clusterName, clusterProvider, new PartitionIdentityLookup())
                 .WithClusterKind(TopicActor.Kind,
                     Props.FromProducer(() => new TopicActor(new EmptyKeyValueStore<Subscribers>())))
-                .WithClusterKind(Kinds.ChessGame, Props.FromProducer(() => new ChessGameActor()));
+                .WithClusterKind(Kinds.ChessGame, chessProps);
 
             var system = new ActorSystem(systemConfig)
                 .WithServiceProvider(provider)
