@@ -53,3 +53,21 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-monitoring
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tempo-standalone
+  namespace: monitoring
+spec:
+  interval: 5m
+  dependsOn:
+    - name: kube-prometheus-stack
+  chart:
+    spec:
+      version: "0.16.x"
+      chart: tempo
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+      interval: 60m
