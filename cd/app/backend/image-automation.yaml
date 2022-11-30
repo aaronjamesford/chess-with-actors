@@ -7,8 +7,6 @@ metadata:
 spec:
   image: aaronjamesford/chess-backend
   interval: 5m0s
-  secretRef:
-    name: regcred
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
