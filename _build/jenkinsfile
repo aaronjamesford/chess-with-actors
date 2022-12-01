@@ -35,10 +35,10 @@ pipeline {
                 container('node') {
                     dir('src/chess-ui') {
                         sh 'npm install'
-                        sh 'npm run build --prod --output-path=../../_build/out/ui'
+                        sh 'npm run build -- --configuration=production --output-path=../../_build/out/ui'
                     }
 
-                    sh 'ls /_build/out/ui'
+                    //sh "cp src/chess-ui/dist/**/* _build/out/ui"
                 }
             }
         }

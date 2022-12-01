@@ -4,12 +4,18 @@ metadata:
   labels:
     build-env: dotnet
 spec:
+  securityContext:
+    runAsUser: 1000 # default UID of jenkins user in agent image
+    fsGroup: 1000
   containers:
   - name: dotnet-sdk
     image: mcr.microsoft.com/dotnet/sdk:6.0
     command:
     - cat
     tty: true
+    env:
+    - name: HOME
+      value: "/tmp"
   - name: node
     image: node:19.2-alpine
     command:
@@ -23,6 +29,9 @@ spec:
     volumeMounts:
       - mountPath: /var/run/docker.sock
         name: docker-sock
+    env:
+    - name: HOME
+      value: "/tmp"
   volumes:
   - name: docker-sock
     hostPath:
