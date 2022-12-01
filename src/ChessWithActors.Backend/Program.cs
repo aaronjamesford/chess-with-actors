@@ -22,8 +22,10 @@ builder.Services.AddOpenTelemetryTracing(tpb =>
         .AddProtoActorInstrumentation()
         .AddOtlpExporter(opt =>
         {
-            opt.Protocol = builder.Configuration.GetValue<string>("Telemetry:OtlpExporter:Endpoint").Equals("grpc", StringComparison.InvariantCultureIgnoreCase)
-                ? OtlpExportProtocol.Grpc : OtlpExportProtocol.HttpProtobuf;
+            opt.Protocol = builder.Configuration.GetValue<string>("Telemetry:OtlpExporter:Endpoint")
+                .Equals("grpc", StringComparison.InvariantCultureIgnoreCase)
+                ? OtlpExportProtocol.Grpc
+                : OtlpExportProtocol.HttpProtobuf;
             opt.Endpoint = new Uri(builder.Configuration.GetValue<string>("Telemetry:OtlpExporter:Endpoint"));
         });
 });

@@ -1,0 +1,15 @@
+<header class="p-3 text-bg-dark">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+            <span class="fs-4">Chess with actors</span>
+        </a>
+
+        <ul ngbNav [(activeId)]="activeId" class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <li [ngbNavItem]="1"><a ngbNavLink routerLink="" [ngClass]="activeId == 1 ? 'text-secondary' : 'text-white'" class="nav-link px-2">Home</a></li>
+            <li [ngbNavItem]="2"><a ngbNavLink href="#" [ngClass]="activeId == 2 ? 'text-secondary' : 'text-white'" class="nav-link px-2">Start game</a></li>
+            <li [ngbNavItem]="3"><a ngbNavLink href="#" [ngClass]="activeId == 3 ? 'text-secondary' : 'text-white'" class="nav-link px-2">Join game</a></li>
+        </ul>
+        </div>
+    </div>
+</header>

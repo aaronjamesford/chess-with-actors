@@ -1,0 +1,17 @@
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-3">
+        <h1 class="display-5 fw-bold">Setup username</h1>
+        <form #f="ngForm" (ngSubmit)="setUsername(f)">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" [disabled]="f.submitted" class="form-control" id="chessUsername" placeholder="Pick a username" [(ngModel)]="f.value.user" name="user">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <button [disabled]="f.submitted" class="btn btn-primary">Set Username</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

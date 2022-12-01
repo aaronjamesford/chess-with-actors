@@ -1,0 +1,16 @@
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+    <div class="toast-container p-3 top-0 end-0">
+        <div class="toast fade show" role="status" aria-live="polite" aria-atomic="true" *ngFor="let toast of notifs.notifications">
+            <div class="toast-header">
+                <strong class="me-auto">{{ toast.title }}</strong>
+                <small>{{ toast.timeLabel }}</small>
+                <button type="button" class="btn-close" (click)="notifs.dismiss(toast)" aria-label="Close"></button>
+            </div>
+
+            <div class="toast-body">
+                {{ toast.body }}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TODO -- Do some magic with ngbToast -->
