@@ -14,11 +14,10 @@ export class HomeComponent {
     public async setUsername(form: NgForm) {
         try {
             await this.chessSvc.connect(form.value.user);
-            this.notifs.notify("Connected", "Connected to chess hub");
+            this.notifs.notify("Connected", "Connected to chess hub", { autohide: true });
         }
-        catch(ex) {
-            // TODO - Maybe something with the reset?? Should prolly not keep them disabled
-            //console.log(ex);
+        catch(e: any) {
+            this.notifs.error(e.message);
             form.reset();
         }
     }

@@ -37,8 +37,6 @@ pipeline {
                         sh 'npm install'
                         sh 'npm run build -- --configuration=production --output-path=../../_build/out/ui'
                     }
-
-                    //sh "cp src/chess-ui/dist/**/* _build/out/ui"
                 }
             }
         }

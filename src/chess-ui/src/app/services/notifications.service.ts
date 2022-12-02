@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { UntypedFormArray } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -6,23 +7,39 @@ import { Injectable } from '@angular/core'
 export class NotificationsService {
     public notifications: Notification[];
 
+    private defaultOptions = {
+      autohide: true,
+      class: ''
+    }
+
     constructor() {
       this.notifications = new Array<Notification>();
 
       setInterval(() => {
         this.notifications.forEach(n => {
-          n.timeLabel = this.getTimeLabel(n.occurredAt);
+          if(n.title)
+            n.timeLabel = this.getTimeLabel(n.occurredAt);
         });
       }, 10000);
     }
 
-    public notify(title: string, body: string, delay?: number) {
+    public notify(title: string, body: string, options?: object) {
       this.notifications.push({
         title: title,
         body: body,
-        delay: delay,
         occurredAt: new Date(),
-        timeLabel: 'Just now!'
+        timeLabel: 'Just now!',
+        options: options || this.defaultOptions
+      });
+    }
+
+    public error(body: string) {
+      this.notifications.push({
+        title: "An error occurred",
+        body: body,
+        occurredAt: new Date(),
+        timeLabel: 'Just now!',
+        options: { ...this.defaultOptions, class: 'bg-danger text-light' }
       });
     }
 
@@ -53,9 +70,9 @@ export class NotificationsService {
 }
 
 export interface Notification {
-  title: string;
+  title?: string;
   occurredAt: Date;
   body: string;
-  delay?: number;
-  timeLabel: string;
+  timeLabel?: string;
+  options: any;
 }

@@ -27,7 +27,7 @@ public class ChessHub : Hub
     {
         _logger.LogInformation("User connected {ConnectionId}", Context.ConnectionId);
         var conn = Context.ConnectionId;
-        UserActor = _rootAccessor().Spawn(Props.FromProducer(() => new HubUser()));
+        UserActor = _rootAccessor().Spawn(Props.FromProducer(() => new HubUser(/* TODO - Callbacks/Events */)));
         
         return base.OnConnectedAsync();
     }
@@ -48,6 +48,6 @@ public class ChessHub : Hub
     public void JoinGame(string user, string game)
         => _rootAccessor().Send(UserActor!, new JoinGame { Username = user, GameId = game });
 
-    public void MakeMove(string user, string game, string from, string to) // TODO game ID
+    public void MakeMove(string user, string game, string from, string to)
         => _rootAccessor().Send(UserActor!, new MakeMove { Username = user, GameId = game, From = from, To = to });
 }
