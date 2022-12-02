@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`chess.localhost`) && PathPrefix(`/hubs`, `/api`)
+  - match: Host(`chess.localhost`) && (PathPrefix(`/hubs`) || PathPrefix(`/api`) || PathPrefix(`/metrics`))
     kind: Rule
     services:
     - name: chess-api

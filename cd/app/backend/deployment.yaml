@@ -19,14 +19,14 @@ spec:
       serviceAccountName: chess-cluster
       containers:
         - name: backend
-          image: aaronjamesford/chess-backend:main-33 # {"$imagepolicy": "flux-system:chess-backend"}
+          image: aaronjamesford/chess-backend:main-32 # {"$imagepolicy": "flux-system:chess-backend"}
           resources:
             limits:
-              memory: "2Gi"
-              cpu: "1000m"
-            requests:
               memory: "500Mi"
               cpu: "500m"
+            requests:
+              memory: "200Mi"
+              cpu: "200m"
           ports:
             - name: http
               containerPort: 80
