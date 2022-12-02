@@ -1,15 +1,15 @@
-# ---
-# apiVersion: traefik.containo.us/v1alpha1  
-# kind: IngressRoute  
-# metadata:  
-#   name: chess-ui
-#   namespace: chess-with-actors
-# spec:  
-#   entryPoints:
-#     - web
-#   routes:
-#   - match: Host(`chess.localhost`) && Path(`/`)
-#     kind: Rule
-#     services:
-#     - name: chess-ui
-#       port: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1  
+kind: IngressRoute  
+metadata:  
+  name: chess-ui
+  namespace: chess-with-actors
+spec:  
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`chess.localhost`) && Path(`/`)
+    kind: Rule
+    services:
+    - name: chess-ui
+      port: 8080
