@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`chess.localhost`) && (PathPrefix(`/hubs`) || PathPrefix(`/api`) || PathPrefix(`/metrics`))
+  - match: Host(`chess.localhost`) && PathPrefix(`/hubs`)
     kind: Rule
     services:
     - name: chess-api
@@ -17,3 +17,8 @@ spec:
         cookie:
           httpOnly: true
           name: peskybird
+  - match: Host(`chess.localhost`) && PathPrefix(`/api`)
+    kind: Rule
+    services:
+    - name: chess-api
+      port: 80
