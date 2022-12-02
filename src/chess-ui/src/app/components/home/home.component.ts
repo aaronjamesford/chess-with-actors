@@ -12,9 +12,9 @@ export class HomeComponent {
     constructor(private chessSvc: ChessHubService, private notifs: NotificationsService) {}
 
     public async setUsername(form: NgForm) {
-        this.notifs.notify("New user!", "Submitted username");
         try {
             await this.chessSvc.connect(form.value.user);
+            this.notifs.notify("Connected", "Connected to chess hub");
         }
         catch(ex) {
             // TODO - Maybe something with the reset?? Should prolly not keep them disabled

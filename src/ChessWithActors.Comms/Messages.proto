@@ -37,14 +37,16 @@ message CreateGame {
 }
 
 message JoinGame {
-    string Username = 1;
+    string GameId = 1;
+    string Username = 2;
 }
 
 message MakeMove
 {
-    string Username = 1;
-    string From = 2;
-    string To = 3;
+    string GameId = 1;
+    string Username = 2;
+    string From = 3;
+    string To = 4;
 }
 
 message InvalidMove
