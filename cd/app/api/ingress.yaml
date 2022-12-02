@@ -13,3 +13,7 @@ spec:
     services:
     - name: chess-api
       port: 80
+      sticky:
+        cookie:
+          httpOnly: true
+          name: peskybird
