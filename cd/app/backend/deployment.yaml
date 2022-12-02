@@ -19,7 +19,7 @@ spec:
       serviceAccountName: chess-cluster
       containers:
         - name: backend
-          image: aaronjamesford/chess-backend:main-29 # {"$imagepolicy": "flux-system:chess-backend"}
+          image: aaronjamesford/chess-backend:main-30 # {"$imagepolicy": "flux-system:chess-backend"}
           resources:
             limits:
               memory: "2Gi"
