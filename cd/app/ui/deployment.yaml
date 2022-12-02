@@ -47,7 +47,7 @@ spec:
             mountPath: "/usr/share/nginx/html/assets"
             subPath: "app.config.json"
             readOnly: true
-        volumes:
-        - name: config
-          configMap:
-            name: chess-ui
+      volumes:
+      - name: config
+        configMap:
+          name: chess-ui
