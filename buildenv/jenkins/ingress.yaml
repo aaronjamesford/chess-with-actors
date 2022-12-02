@@ -11,5 +11,5 @@ spec:
   - match: Host(`jenkins.localhost`)
     kind: Rule
     services:
-    - name: jenkins-server
+    - name: jenkins-service
       port: 8080
