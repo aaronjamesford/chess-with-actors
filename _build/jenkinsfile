@@ -7,9 +7,25 @@ pipeline {
     }
 
     stages {
-        stage('Build backend') {
-            steps {
-                sh 'dotnet build src/ChessWithActors.sln -c Release'
+
+        stage('Build') {
+            parallel {
+                stage('Build dotnet') {
+                    steps {
+                        sh 'dotnet build src/ChessWithActors.sln -c Release'
+                    }
+                }
+
+                stage('Build ui') {
+                    steps {
+                        container('node') {
+                            dir('src/chess-ui') {
+                                sh 'npm install'
+                                sh 'npm run build -- --configuration=production --output-path=../../_build/out/ui'
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -19,53 +35,51 @@ pipeline {
             }
         }
 
-        stage('Package backend') {
-            steps {
-                container('dotnet-sdk') {
-                    sh 'dotnet publish src/ChessWithActors.Backend/ChessWithActors.Backend.csproj -c Release --no-build -o _build/out/backend'
+        stage('Package') {
+            parallel {
+                stage('Package backend') {
+                    steps {
+                        container('dotnet-sdk') {
+                            sh 'dotnet publish src/ChessWithActors.Backend/ChessWithActors.Backend.csproj -c Release --no-build -o _build/out/backend'
+                        }
+                        container('docker') {
+                            sh "docker build -f _build/Backend.Dockerfile -t aaronjamesford/chess-backend:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
+                        }
+                    }
                 }
-                container('docker') {
-                    sh "docker build -f _build/Backend.Dockerfile -t aaronjamesford/chess-backend:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
-                }
-            }
-        }
 
-        stage('Build ui') {
-            steps {
-                container('node') {
-                    dir('src/chess-ui') {
-                        sh 'npm install'
-                        sh 'npm run build -- --configuration=production --output-path=../../_build/out/ui'
+                stage('Package ui') {
+                    steps {
+                        container('docker') {
+                            sh "docker build -f _build/UI.Dockerfile -t aaronjamesford/chess-ui:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
+                        }
                     }
                 }
             }
         }
+                
 
-        stage('Package ui') {
-            steps {
-                container('docker') {
-                    sh "docker build -f _build/UI.Dockerfile -t aaronjamesford/chess-ui:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
-                }
-            }
-        }
-
-        stage('Publish backend') {
-            steps {
-                container('docker') {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                        sh "docker push aaronjamesford/chess-backend:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+        stage('Publish') {
+            parallel {
+                stage('Publish backend') {
+                    steps {
+                        container('docker') {
+                            withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                                sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+                                sh "docker push aaronjamesford/chess-backend:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        stage('Publish ui') {
-            steps {
-                container('docker') {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                        sh "docker push aaronjamesford/chess-ui:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                stage('Publish ui') {
+                    steps {
+                        container('docker') {
+                            withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                                sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+                                sh "docker push aaronjamesford/chess-ui:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                            }
+                        }
                     }
                 }
             }
