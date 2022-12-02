@@ -22,7 +22,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   local:
-    path: /mnt
+    path: /run/desktop/mnt/host/c/k8s/volumes
   nodeAffinity:
     required:
       nodeSelectorTerms:
