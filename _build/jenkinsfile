@@ -48,6 +48,17 @@ pipeline {
                     }
                 }
 
+                stage('Package api') {
+                    steps {
+                        container('dotnet-sdk') {
+                            sh 'dotnet publish src/ChessWithActors.Api/ChessWithActors.Api.csproj -c Release --no-build -o _build/out/api'
+                        }
+                        container('docker') {
+                            sh "docker build -f _build/Api.Dockerfile -t aaronjamesford/chess-api:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ."
+                        }
+                    }
+                }
+
                 stage('Package ui') {
                     steps {
                         container('docker') {
@@ -67,6 +78,17 @@ pipeline {
                             withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                                 sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
                                 sh "docker push aaronjamesford/chess-backend:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                            }
+                        }
+                    }
+                }
+
+                stage('Publish api') {
+                    steps {
+                        container('docker') {
+                            withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                                sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+                                sh "docker push aaronjamesford/chess-api:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
                             }
                         }
                     }
