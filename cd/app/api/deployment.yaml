@@ -1,34 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ui
+  name: api
   namespace: chess-with-actors
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: chess-ui
+      app: chess-api
   template:
     metadata:
       labels:
-        app: chess-ui
+        app: chess-api
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
     spec:
+      serviceAccountName: chess-cluster
       containers:
-        - name: ui
-          image: aaronjamesford/chess-ui:main-33 # {"$imagepolicy": "flux-system:chess-ui"}
+        - name: api
+          image: aaronjamesford/chess-api:main-32 # {"$imagepolicy": "flux-system:chess-api"}
           resources:
             limits:
-              memory: "200Mi"
-              cpu: "100m"
+              memory: "500Mi"
+              cpu: "500m"
             requests:
               memory: "200Mi"
-              cpu: "100m"
+              cpu: "200m"
           ports:
             - name: http
               containerPort: 80
           livenessProbe:
             httpGet:
-              path: "/assets/app.config.json"
+              path: "/metrics"
               port: 80
             initialDelaySeconds: 90
             periodSeconds: 10
@@ -36,18 +40,14 @@ spec:
             failureThreshold: 5
           readinessProbe:
             httpGet:
-              path: "/assets/app.config.json"
+              path: "/metrics"
               port: 80
             initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 3
-          volumeMounts:
-          - name: config
-            mountPath: "/usr/share/nginx/html/assets"
-            subPath: "app.config.json"
-            readOnly: true
-        volumes:
-        - name: config
-          configMap:
-            name: chess-ui
+          env:
+            - name: ProtoActor__AdvertisedHost
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
