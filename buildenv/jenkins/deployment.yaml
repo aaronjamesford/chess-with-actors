@@ -37,10 +37,10 @@ spec:
             httpGet:
               path: "/login"
               port: 8080
-            initialDelaySeconds: 90
+            initialDelaySeconds: 180
             periodSeconds: 10
             timeoutSeconds: 5
-            failureThreshold: 5
+            failureThreshold: 10
           readinessProbe:
             httpGet:
               path: "/login"
