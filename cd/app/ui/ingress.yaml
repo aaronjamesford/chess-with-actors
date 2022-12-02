@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`chess.localhost`) && Path(`/`)
+  - match: Host(`chess.localhost`) && PathPrefix(`/`)
     kind: Rule
     services:
     - name: chess-ui
