@@ -7,7 +7,6 @@ metadata:
 spec:
   selector:
     app: chess-ui
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 80
-      nodePort: 32100
