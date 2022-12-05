@@ -5,7 +5,6 @@ import { ChessHubService } from 'src/app/services/chess-hub.service';
 @Component({
   selector: 'create-game',
   template: 'Creating game...',
-  styleUrls: ['./header.component.css'],
 })
 export class CreateGameComponent implements AfterViewInit {
     constructor(private chessHub: ChessHubService, private router: Router) {}
