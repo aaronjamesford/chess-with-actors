@@ -7,8 +7,8 @@
 
         <ul ngbNav [(activeId)]="activeId" class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
             <li [ngbNavItem]="1"><a ngbNavLink routerLink="" [ngClass]="activeId == 1 ? 'text-secondary' : 'text-white'" class="nav-link px-2">Home</a></li>
-            <li [ngbNavItem]="2"><a ngbNavLink href="#" [ngClass]="activeId == 2 ? 'text-secondary' : 'text-white'" class="nav-link px-2">Start game</a></li>
-            <li [ngbNavItem]="3"><a ngbNavLink href="#" [ngClass]="activeId == 3 ? 'text-secondary' : 'text-white'" class="nav-link px-2">Join game</a></li>
+            <li [ngbNavItem]="2"><a ngbNavLink routerLink="create" [ngClass]="activeId == 2 ? 'text-secondary' : 'text-white'" class="nav-link px-2">Start game</a></li>
+            <li [ngbNavItem]="3"><a ngbNavLink routerLink="join" [ngClass]="activeId == 3 ? 'text-secondary' : 'text-white'" class="nav-link px-2">Join game</a></li>
         </ul>
         </div>
     </div>

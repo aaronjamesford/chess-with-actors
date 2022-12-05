@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { NgxChessBoardModule } from "ngx-chess-board";
+
 import { ChessHubService } from './services/chess-hub.service';
 import { AppConfigService } from './services/app-confg.service';
 
@@ -14,9 +16,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotificationsService } from './services/notifications.service';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ChessGameComponent } from './components/chessgame/chessgame.component';
+import { CreateGameComponent } from './components/create/create.component';
+import { JoinComponent } from './components/join/join.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'create', component: CreateGameComponent },
+  { path: 'join', component: JoinComponent },
+  { path: 'game/:id', component: ChessGameComponent }
 ];
 
 @NgModule({
@@ -24,7 +32,10 @@ const routes: Routes = [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    ChessGameComponent,
+    CreateGameComponent,
+    JoinComponent,
   ],
   imports: [
     FormsModule,
@@ -32,7 +43,8 @@ const routes: Routes = [
     BrowserModule,
     NgbModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    NgxChessBoardModule.forRoot()
   ],
   exports: [RouterModule],
   providers: [

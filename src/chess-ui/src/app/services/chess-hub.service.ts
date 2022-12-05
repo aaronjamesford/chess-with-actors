@@ -22,7 +22,7 @@ export class ChessHubService {
   private invalidMove$ : Subject<InvalidMove>;
 
   private connection : HubConnection;
-  private username: string | undefined;
+  public username?: string;
 
   constructor(configSvc: AppConfigService) {
 
@@ -60,19 +60,19 @@ export class ChessHubService {
 
   public createGame() : string {
     var gameId = uuidv4();
-    this.connection.send("CreateGame", { gameId: gameId });
+    this.connection.send("CreateGame", { GameId: gameId });
 
     return gameId;
   }
 
   public joinGame(gameId: string)
   {
-    this.connection.send("JoinGame", { username: this.username, gameId: gameId })
+    this.connection.send("JoinGame", { Username: this.username, GameId: gameId })
   }
 
   public makeMove(gameId: string, from: string, to: string)
   {
-    this.connection.send("MakeMove", { gameId: gameId, username: this.username, from: from, to: to });
+    this.connection.send("MakeMove", { GameId: gameId, Username: this.username, From: from, To: to });
   }
 
 }

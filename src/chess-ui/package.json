@@ -22,6 +22,7 @@
     "@ng-bootstrap/ng-bootstrap": "^14.0.0-rc.1",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
+    "ngx-chess-board": "^2.2.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0",
