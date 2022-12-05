@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ui
-          image: aaronjamesford/chess-ui:main-33 # {"$imagepolicy": "flux-system:chess-ui"}
+          image: aaronjamesford/chess-ui:main-34 # {"$imagepolicy": "flux-system:chess-ui"}
           resources:
             limits:
               memory: "200Mi"
@@ -43,11 +43,11 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
           volumeMounts:
-          - name: config
-            mountPath: "/usr/share/nginx/html/assets/app.config.json"
-            subPath: "app.config.json"
-            readOnly: true
+            - name: config
+              mountPath: "/usr/share/nginx/html/assets/app.config.json"
+              subPath: "app.config.json"
+              readOnly: true
       volumes:
-      - name: config
-        configMap:
-          name: chess-ui
+        - name: config
+          configMap:
+            name: chess-ui

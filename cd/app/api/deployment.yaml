@@ -19,7 +19,7 @@ spec:
       serviceAccountName: chess-cluster
       containers:
         - name: api
-          image: aaronjamesford/chess-api:main-33 # {"$imagepolicy": "flux-system:chess-api"}
+          image: aaronjamesford/chess-api:main-34 # {"$imagepolicy": "flux-system:chess-api"}
           resources:
             limits:
               memory: "500Mi"
