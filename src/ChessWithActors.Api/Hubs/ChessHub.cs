@@ -27,7 +27,7 @@ public class ChessHub : Hub
     {
         _logger.LogInformation("User connected {ConnectionId}", Context.ConnectionId);
         var conn = Context.ConnectionId;
-        UserActor = _rootAccessor().Spawn(Props.FromProducer(() => new HubUser(/* TODO - Callbacks/Events */)));
+        UserActor = _rootAccessor().Spawn(Props.FromProducer(() => new HubUser(new HubForwardingChessHandler(_context, conn))));
         
         return base.OnConnectedAsync();
     }
