@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: backend-redis
+  namespace: chess-with-actors
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: redis
+      version: '17.3.x'
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: default
+      interval: 6h
+    values:
+      architecture: standalone
+      master:
+        persistence:
+          enabled: false
+      metrics:
+        enabled: true
