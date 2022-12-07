@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ui
-          image: aaronjamesford/chess-ui:main-37 # {"$imagepolicy": "flux-system:chess-ui"}
+          image: aaronjamesford/chess-ui:main-38 # {"$imagepolicy": "flux-system:chess-ui"}
           resources:
             limits:
               memory: "200Mi"
