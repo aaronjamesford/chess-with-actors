@@ -14,10 +14,10 @@ spec:
         name: bitnami
         namespace: default
       interval: 6h
-    values:
-      architecture: standalone
-      master:
-        persistence:
-          enabled: false
-      metrics:
-        enabled: true
+  values:
+    architecture: standalone
+    master:
+      persistence:
+        enabled: false
+    metrics:
+      enabled: true
