@@ -20,6 +20,7 @@
         <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="8.1.0" />
+        <PackageReference Include="StackExchange.Redis" Version="2.6.80" />
     </ItemGroup>
 
     <ItemGroup>
