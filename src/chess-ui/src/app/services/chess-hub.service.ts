@@ -60,19 +60,19 @@ export class ChessHubService {
 
   public createGame() : string {
     var gameId = uuidv4();
-    this.connection.send("CreateGame", { GameId: gameId });
+    this.connection.send("CreateGame", gameId);
 
     return gameId;
   }
 
   public joinGame(gameId: string)
   {
-    this.connection.send("JoinGame", { Username: this.username, GameId: gameId })
+    this.connection.send("JoinGame", this.username, gameId )
   }
 
   public makeMove(gameId: string, from: string, to: string)
   {
-    this.connection.send("MakeMove", { GameId: gameId, Username: this.username, From: from, To: to });
+    this.connection.send("MakeMove", this.username, gameId, from, to);
   }
 
 }
