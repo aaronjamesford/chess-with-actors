@@ -35,19 +35,21 @@ public class HubUser : IActor
     private async Task HandleCreate(CreateGame msg, IContext context)
     {
         var pid = await context.Cluster().GetChessGame(msg.GameId);
-        if(pid != null)
+        if (pid != null)
+        {
+            await Subscribe(msg.GameId, context);
             context.Request(pid, msg, context.Self);
-
-        await Subscribe(msg.GameId, context);
+        }
     }
 
     private async Task HandleJoin(JoinGame msg, IContext context)
     {
         var pid = await context.Cluster().GetChessGame(msg.GameId);
-        if(pid != null)
+        if (pid != null)
+        {
+            await Subscribe(msg.GameId, context);
             context.Request(pid, msg, context.Self);
-        
-        await Subscribe(msg.GameId, context);
+        }
     }
 
     private async Task HandleMove(MakeMove msg, IContext context)
