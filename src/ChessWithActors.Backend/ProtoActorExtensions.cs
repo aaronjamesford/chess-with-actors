@@ -86,7 +86,7 @@ public static class ProtoActorExtensions
     {
         if (string.Equals(config["Proto:Pubsub:SubscriberStore"], "redis", StringComparison.InvariantCultureIgnoreCase))
         {
-            var multiplexer = ConnectionMultiplexer.Connect(config["Proto.Pubsub:RedisConnectionString"]);
+            var multiplexer = ConnectionMultiplexer.Connect(config["Proto:Pubsub:RedisConnectionString"]);
             return new RedisKeyValueStore(multiplexer.GetDatabase(),
                 config.GetValue<int>("Proto:Pubsub:RedisMaxConcurrency"));
         }
