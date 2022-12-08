@@ -31,22 +31,28 @@ export class ChessHubService {
       .build();
 
     this.playerJoined$ = new Subject<PlayerJoined>();
-    this.playerJoined = this.playerJoined$;
+    this.playerJoined = this.playerJoined$.asObservable();
 
     this.gameStarted$ = new Subject<GameStarted>();
-    this.gameStarted = this.gameStarted$;
+    this.gameStarted = this.gameStarted$.asObservable();
 
     this.gameEnded$ = new Subject<GameEnded>();
-    this.gameEnded = this.gameEnded$;
+    this.gameEnded = this.gameEnded$.asObservable();
 
     this.moveMade$ = new Subject<MoveMade>();
-    this.moveMade = this.moveMade$;
+    this.moveMade = this.moveMade$.asObservable();
 
     this.invalidMove$ = new Subject<InvalidMove>();
-    this.invalidMove = this.invalidMove$;
+    this.invalidMove = this.invalidMove$.asObservable();
 
-    this.connection.on("MoveMade", mm => this.moveMade$.next(mm));
-    this.connection.on("PlayerJoined", pj => this.playerJoined$.next(pj));
+    this.connection.on("MoveMade", mm => {
+      console.log(mm);
+      this.moveMade$.next(mm);
+    });
+    this.connection.on("PlayerJoined", pj => {
+      console.log(pj);
+      this.playerJoined$.next(pj);
+    });
     this.connection.on("GameStarted", gs => this.gameStarted$.next(gs));
     this.connection.on("GameEnded", ge => this.gameEnded$.next(ge));
     this.connection.on("InvalidMove", im => this.invalidMove$.next(im));

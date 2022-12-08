@@ -65,7 +65,7 @@ public class HubUser : IActor
         if (_subscriptions.Contains(topic))
             return;
         
-        await context.Cluster().Subscribe(topic, context.Self);
+        await context.Cluster().Subscribe(topic, context.Self, CancellationTokens.FromSeconds(1));
         _subscriptions.Add(topic);
     }
 
@@ -75,7 +75,7 @@ public class HubUser : IActor
         if (!_subscriptions.Contains(topic))
             return;
 
-        await context.Cluster().Unsubscribe(topic, context.Self);
+        await context.Cluster().Unsubscribe(topic, context.Self, CancellationTokens.FromSeconds(1));
         _subscriptions.Remove(topic);
     }
 
@@ -83,7 +83,7 @@ public class HubUser : IActor
     {
         foreach (var topic in _subscriptions)
         {
-            await context.Cluster().Unsubscribe(topic, context.Self);
+            await context.Cluster().Unsubscribe(topic, context.Self, CancellationTokens.FromSeconds(1));
         }
         
         _subscriptions.Clear();
