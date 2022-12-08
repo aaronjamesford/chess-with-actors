@@ -26,8 +26,8 @@ public class HubUser : IActor
             MakeMove mm => HandleMove(mm, context),
             InvalidMove im => _handler.InvalidMove(im),
             MoveMade mm => _handler.MoveMade(mm),
-            GameEnded ge => _handler.GameEnded(ge),            
-            Stopped => UnsubscribeAll(context),
+            GameEnded ge => _handler.GameEnded(ge),
+            Stopping => UnsubscribeAll(context),
             _ => Task.CompletedTask
         };
     }
