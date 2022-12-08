@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { NgxChessBoardView } from 'ngx-chess-board';
 import { filter } from 'rxjs';
-import { ChessHubService, ChessPlayerType } from 'src/app/services/chess-hub.service';
+import { ChessHubService, ChessPlayerType, ChessWinner } from 'src/app/services/chess-hub.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class ChessGameComponent implements AfterViewInit {
         this.chessService.playerJoined
             .pipe(filter(pj => pj.username != this.chessService.username && pj.gameId == this.id))
             .subscribe(pj => {
-                this.notifs.notify('Player joined!', '${pj.username} joined the game!');
+                this.notifs.notify('Player joined!', `${pj.username} joined the game!`);
             });
 
         this.chessService.gameStarted
@@ -53,9 +53,22 @@ export class ChessGameComponent implements AfterViewInit {
         this.chessService.invalidMove
             .pipe(filter(im => im.gameId == this.id && im.username == this.chessService.username))
             .subscribe(im => {
-                var message = 'Unable to make move ${im.from} to ${im.to} because: ${im.reason}';
+                var message = `Unable to make move ${im.from} to ${im.to} because: ${im.reason}`;
                 this.notifs.error(message);
                 console.log(message);
+            });
+
+        this.chessService.gameEnded
+            .pipe(filter(ge => ge.gameId == this.id))
+            .subscribe(ge => {
+                if((ge.winner == ChessWinner.BlackWin && !this.isWhite) || (ge.winner == ChessWinner.WhiteWin && this.isWhite)) {
+                    notifs.notify("Game over!", "Yaaaay you win!");
+                }
+                else if(ge.winner == ChessWinner.Draw)
+                    notifs.notify("Game over!", "This game ended in a stalemate");
+                else
+                    notifs.notify("Game over!", "Sorry bud but you lost!");
+
             })
     }
 
