@@ -27,6 +27,8 @@ public static class ProtoActorExtensions
             
             var config = provider.GetRequiredService<IConfiguration>();
 
+            Log.SetLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
+
             var systemConfig = ActorSystemConfig.Setup()
                 .WithMetrics();
 

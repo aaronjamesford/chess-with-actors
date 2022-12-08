@@ -34,7 +34,7 @@ spec:
             httpGet:
               path: "/metrics"
               port: 80
-            initialDelaySeconds: 90
+            initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 5
@@ -42,7 +42,7 @@ spec:
             httpGet:
               path: "/metrics"
               port: 80
-            initialDelaySeconds: 60
+            initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 3

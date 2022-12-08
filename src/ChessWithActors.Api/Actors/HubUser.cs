@@ -64,7 +64,7 @@ public class HubUser : IActor
         var topic = ChessGame.Topic(game);
         if (_subscriptions.Contains(topic))
             return;
-
+        
         await context.Cluster().Subscribe(topic, context.Self);
         _subscriptions.Add(topic);
     }
