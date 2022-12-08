@@ -12,4 +12,4 @@ spec:
     kind: Rule
     services:
     - name: kube-prometheus-stack-grafana
-      port: 3000
+      port: 80
