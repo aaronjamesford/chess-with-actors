@@ -32,7 +32,7 @@ public static class ProtoActorExtensions
 
             var (remoteConfig, clusterProvider) = GetClusterConfig(config);
 
-            var chessProps = Props.FromProducer(() => new ChessGameActor()).WithTracing();
+            var chessProps = Props.FromProducer(() => ActivatorUtilities.CreateInstance<ChessGameActor>(provider)).WithTracing();
 
             var clusterConfig = ClusterConfig.Setup(clusterName, clusterProvider, new PartitionIdentityLookup())
                 .WithClusterKind(TopicActor.Kind,

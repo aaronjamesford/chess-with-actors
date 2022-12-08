@@ -8,6 +8,8 @@ namespace ChessWithActors.Backend.Actors;
 
 public class ChessGameActor : IActor
 {
+    private readonly ILogger<ChessGameActor> _logger;
+    
     private string? _id;
     private GameState _state = GameState.DoesNotExist;
 
@@ -16,6 +18,11 @@ public class ChessGameActor : IActor
 
     private ChessBoard? _board;
     private ChessPlayerType _current = ChessPlayerType.White;
+
+    public ChessGameActor(ILogger<ChessGameActor> logger)
+    {
+        _logger = logger;
+    }
     
     public Task ReceiveAsync(IContext context)
     {
@@ -34,6 +41,8 @@ public class ChessGameActor : IActor
         if (_state != GameState.DoesNotExist)
             return;
         
+        _logger.LogInformation("Creating game {GameId}", msg.GameId);
+        
         _id = msg.GameId;
         _state = GameState.PendingPlayerJoin;
         _board = new ChessBoard();
@@ -49,6 +58,8 @@ public class ChessGameActor : IActor
     {
         if (_state != GameState.PendingPlayerJoin)
             return;
+        
+        _logger.LogInformation("Player joining {GameId} {Username}", msg.GameId, msg.Username);
 
         var player = ChessPlayerType.White;
 
@@ -91,6 +102,8 @@ public class ChessGameActor : IActor
     {
         if (_state != GameState.InProgress)
             return;
+        
+        _logger.LogInformation("Processing move {GameId} {Username}", msg.GameId, msg.Username);
 
         var expectedPlayer = _current == ChessPlayerType.White ? _whitePlayer : _blackPlayer;
         if (msg.Username != expectedPlayer)
@@ -142,6 +155,8 @@ public class ChessGameActor : IActor
     {
         if (!_board!.IsEndGame)
             return;
+        
+        _logger.LogInformation("Ending game {GameId}", _id);
 
         _state = GameState.Concluded;
 

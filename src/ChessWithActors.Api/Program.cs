@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using ChessWithActors.Api;
 using ChessWithActors.Api.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -17,6 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddChessApiProtoActor();
 builder.Services.AddSignalR();
 builder.Services.AddCors();
+builder.Services.AddSingleton<Func<IHubContext<ChessHub>, string, HubForwardingChessHandler>>(svcs
+    => (ctx, conn) =>
+        new HubForwardingChessHandler(ctx, conn, svcs.GetRequiredService<ILogger<HubForwardingChessHandler>>()));
 
 builder.Services.AddOpenTelemetryTracing(tpb =>
 {
