@@ -19,13 +19,13 @@ public class HubForwardingChessHandler : IChessHandler
     public async Task GameStarted(GameStarted started)
     {
         _logger.LogInformation("Forwarding game started {GameId} {ConnectionId}", started.GameId, _connection);
-        await _context.Clients.Client(_connection).SendAsync(nameof(GameStarted), started);
+        await _context.Clients.Client(_connection).SendAsync("GameStarted", started);
     }
 
     public async Task PlayerJoined(PlayerJoined joined)
     {
         _logger.LogInformation("Forwarding player joined {GameId} {Username} {ConnectionId}", joined.GameId, joined.Username, _connection);
-        await _context.Clients.Client(_connection).SendAsync(nameof(PlayerJoined), joined);
+        await _context.Clients.Client(_connection).SendAsync("PlayerJoined", joined);
     }
 
     public async Task InvalidMove(InvalidMove details)
