@@ -45,17 +45,26 @@ export class ChessHubService {
     this.invalidMove$ = new Subject<InvalidMove>();
     this.invalidMove = this.invalidMove$.asObservable();
 
-    this.connection.on("MoveMade", mm => {
+    this.connection.on("MoveMade", (mm: MoveMade) => {
       console.log(mm);
       this.moveMade$.next(mm);
     });
-    this.connection.on("PlayerJoined", pj => {
+    this.connection.on("PlayerJoined", (pj: PlayerJoined) => {
       console.log(pj);
       this.playerJoined$.next(pj);
     });
-    this.connection.on("GameStarted", gs => this.gameStarted$.next(gs));
-    this.connection.on("GameEnded", ge => this.gameEnded$.next(ge));
-    this.connection.on("InvalidMove", im => this.invalidMove$.next(im));
+    this.connection.on("GameStarted", (gs: GameStarted) => {
+      console.log(gs);
+      this.gameStarted$.next(gs);
+    });
+    this.connection.on("GameEnded", (ge: GameEnded) => {
+      console.log(ge);
+      this.gameEnded$.next(ge);
+    });
+    this.connection.on("InvalidMove", (im: InvalidMove) => {
+      console.log(im);
+      this.invalidMove$.next(im);
+    });
   }
 
   public async connect(username: string)
@@ -96,36 +105,36 @@ export enum ChessEndReason {
 }
  
 export interface PlayerJoined {
-  GameId: string;
-  Username: string;
-  Player: ChessPlayerType;
+  gameId: string;
+  username: string;
+  player: ChessPlayerType;
 }
 
 export interface GameStarted {
-  GameId: string;
-  WhitePlayer: string;
-  BlackPlayer: string;
+  gameId: string;
+  whitePlayer: string;
+  blackPlayer: string;
 }
 
 export interface MoveMade {
-  GameId: string;
-  Username: string;
-  From: string;
-  To: string;
-  Player: ChessPlayerType;
-  OpponentChecked: boolean;
+  gameId: string;
+  username: string;
+  from: string;
+  to: string;
+  player: ChessPlayerType;
+  opponentChecked: boolean;
 }
 
 export interface GameEnded {
-  GameId: string;
-  Winner: ChessWinner;
-  EndReason: ChessEndReason;
+  gameId: string;
+  winner: ChessWinner;
+  endReason: ChessEndReason;
 }
 
 export interface InvalidMove {
-  GameId: string;
-  Username: string;
-  From: string;
-  To: string;
-  Reason: string;
+  gameId: string;
+  username: string;
+  from: string;
+  to: string;
+  reason: string;
 }

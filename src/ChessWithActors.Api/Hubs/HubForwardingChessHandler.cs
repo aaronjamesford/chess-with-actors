@@ -31,18 +31,18 @@ public class HubForwardingChessHandler : IChessHandler
     public async Task InvalidMove(InvalidMove details)
     {
         _logger.LogInformation("Forwarding invalid move {GameId} {Username} {ConnectionId}", details.GameId, details.Username, _connection);
-        await _context.Clients.Client(_connection).SendAsync(nameof(InvalidMove), details);
+        await _context.Clients.Client(_connection).SendAsync("InvalidMove", details);
     }
 
     public async Task MoveMade(MoveMade move)
     {
         _logger.LogInformation("Forwarding move made {GameId} {Username} {ConnectionId}", move.GameId, move.Username, _connection);
-        await _context.Clients.Client(_connection).SendAsync(nameof(MoveMade), move);
+        await _context.Clients.Client(_connection).SendAsync("MoveMade", move);
     }
 
     public async Task GameEnded(GameEnded ended)
     {
         _logger.LogInformation("Forwarding game ended {GameId} {ConnectionId}", ended.GameId, _connection);
-        await _context.Clients.Client(_connection).SendAsync(nameof(GameEnded), ended);
+        await _context.Clients.Client(_connection).SendAsync("GameEnded", ended);
     }
 }
