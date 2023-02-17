@@ -66,6 +66,9 @@ spec:
           operator: In
           values:
           - chess-db
+      resources:
+        requests:
+          storage: 1Gi
     resources:
       requests:
         cpu: 10m
@@ -88,6 +91,9 @@ spec:
                 operator: In
                 values:
                 - chess-backup
+            resources:
+              requests:
+                storage: 1Gi
         resources:
           requests:
             cpu: 10m
