@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redis-operator
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: redis-operator
+  namespace: flux-system
+spec:
+  targetNamespace: redis-operator
+  interval: 10m0s
+  path: ./bundle.yaml
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: redis-operator

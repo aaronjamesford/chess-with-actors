@@ -1,0 +1,17 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: redis-operator
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  ref:
+    branch: master
+  url: https://github.com/RedisLabs/redis-enterprise-k8s-docs
+  
+  ignore: |
+    # exclude all
+    /*
+    # include bundle
+    !/bundle.yaml
