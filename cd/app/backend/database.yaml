@@ -94,17 +94,3 @@ spec:
             resources:
               requests:
                 storage: 1Gi
----
-apiVersion: traefik.containo.us/v1alpha1  
-kind: IngressRouteTCP  
-metadata:  
-  name: chess-db
-  namespace: chess-with-actors
-spec:  
-  entryPoints:
-    - pg
-  routes:
-  - match: Host(`chess.db`)
-    services:
-    - name: backend-db-primary
-      port: 5432
