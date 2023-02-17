@@ -104,7 +104,7 @@ spec:
   entryPoints:
     - pg
   routes:
-  - match: HostSNI(`*`)
+  - match: Host(`chess.db`)
     services:
     - name: backend-db-primary
       port: 5432
