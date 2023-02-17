@@ -1,0 +1,17 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: rabbit-operator
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  ref:
+    branch: main
+  url: https://github.com/rabbitmq/cluster-operator
+  
+  ignore: |
+    # exclude all
+    /*
+    # include bundle
+    !/config
