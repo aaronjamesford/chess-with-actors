@@ -1,0 +1,17 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: postgres-operator
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  ref:
+    branch: master
+  url: https://github.com/CrunchyData/postgres-operator-examples
+  
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/helm/install
