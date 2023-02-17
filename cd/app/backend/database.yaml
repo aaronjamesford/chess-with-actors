@@ -23,6 +23,30 @@ spec:
           values:
           - docker-desktop
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-backup
+  labels:
+    type: local
+    purpose: chess-backup
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /run/desktop/mnt/host/c/k8s/backup
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker-desktop
+---
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
@@ -49,3 +73,25 @@ spec:
       limits:
         cpu: 50m
         memory: 512Mi
+  
+  backups:
+    pgbackrest:
+      repos:
+      - name: backend-db-backup
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - ReadWriteOnce
+            selector:
+              matchExpressions:
+              - key: purpose
+                operator: In
+                values:
+                - chess-backup
+        resources:
+          requests:
+            cpu: 10m
+            memory: 128Mi
+          limits:
+            cpu: 50m
+            memory: 512Mi
