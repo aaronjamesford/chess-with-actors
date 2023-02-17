@@ -12,7 +12,7 @@ metadata:
 spec:
   targetNamespace: redis-operator
   interval: 10m0s
-  path: ./bundle.yaml
+  path: ./
   prune: true
   sourceRef:
     kind: GitRepository
