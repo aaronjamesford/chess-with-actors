@@ -14,3 +14,10 @@ spec:
         name: traefik
         namespace: default
       interval: 6h
+  values:
+    ports:
+      pg:
+        port: 85432
+        expose: true
+        exposedPort: 5432
+        protocol: TCP
