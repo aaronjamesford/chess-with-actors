@@ -17,7 +17,7 @@ spec:
   values:
     ports:
       pg:
-        port: 85432
+        port: 55432
         expose: true
         exposedPort: 5432
         protocol: TCP
