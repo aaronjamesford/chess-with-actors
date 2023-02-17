@@ -80,7 +80,7 @@ spec:
   backups:
     pgbackrest:
       repos:
-      - name: backend-db-backup
+      - name: repo1
         volume:
           volumeClaimSpec:
             accessModes:
